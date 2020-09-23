@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meu Facebook</title>
+    <link rel="stylesheet" href="reset.css"/>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 id="logo">facebook</h1>
+
+            <div class="form">
+                <div class="form-item">
+                    <p class="label">Nome de usuario:</p>
+                    <input type="email" id="nomeUsuario">
+                </div>
+
+                <div class="form-item">
+                    <p class="label">Senha:</p>
+                    <input type="password" id="senha">
+                </div>
+                <button id="botaoEntrar" onclick="logarUsuario()">Entrar</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="painelDireito">
+                <h1 id="descricao">O Facebook ajuda você a se conectar e compartilhar com as pessoas da sua vida.</h1>
+                <img src="image.png" alt=""/>
+            </div>
+            <div class="painelEsquerdo ">
+                <h1 class="titulo">Criar uma conta</h1>
+                
+                <input type="email" id="nomeUsuarioCadastro" class="grandeInput" placeholder="Nome de Usuario">            
+                <input type="password" id="senhaCadastro" class="grandeInput"  placeholder="Senha">
+                <br/>
+                <button id="botaoCadastrar" onclick="cadastrarUsuario()">Cadastrar</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="falsoBackend.js"></script>
+    <script>
+        function cadastrarUsuario(){
+            var nomeUsuario = document.getElementById("nomeUsuarioCadastro").value;
+            var senha = document.getElementById("senhaCadastro").value;
+
+            if(!nomeUsuario){ 
+                alert("Por favor insira um nome de usuario valido");
+                return;
+            }
+
+            if(!senha){ 
+                alert("Por favor digite uma senha valida");
+                return;
+            }
+
+            const novoUsuario = {id: pegaNovoId(), nomeUsuario: nomeUsuario, senha: senha};
+            
+            if(criarUsuario(novoUsuario)){
+                document.getElementById("nomeUsuarioCadastro").value = "";
+                document.getElementById("senhaCadastro").value = "";
+                alert("Novo usuario criado");    
+            }else{
+                alert("ocorreu um erro na criação do usuario !");    
+            }
+        }
+
+        function logarUsuario(){
+            var nomeUsuario = document.getElementById("nomeUsuario").value;
+            var senha = document.getElementById("senha").value;
+
+            if(!nomeUsuario){ 
+                alert("Por favor insira um nome de usuario valido");
+                return;
+            }
+
+            if(!senha){ 
+                alert("Por favor digite uma senha valida");
+                return;
+            }
+            // funcao logar caso consiga logar retorna o objeto do usuario logado.
+            const usuarioLogado = logar(nomeUsuario,senha);
+            if(usuarioLogado){
+                localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+                window.location.href = "dashboard.html"; 
+            }else{
+                document.getElementById("nomeUsuario").value = "";
+                document.getElementById("senha").value = "";
+                alert("Nome de usuario ou senha incorretas");
+            }
+        }
+
+        function mostrarUsuarios(){
+            console.log(usuariosAtuais());
+        }
+    </script>
+</body>
+</html>

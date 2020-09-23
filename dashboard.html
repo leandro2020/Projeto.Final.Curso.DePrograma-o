@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tela principal</title>
+
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+
+</head>
+<body>
+    <h1>LOGADO!!</h1>
+    <button onclick="sair()">Sair</button>
+    <div id="sugestaoAmigos">
+        <h2>Sugestão de amigos</h2>
+        <div id="usuariosAdicionar">
+
+        </div>
+    </div>
+
+    <script src="falsoBackend.js"></script>
+    <script>
+
+        function adicionarAmigo(idAmigo){
+            alert(`Adicionando amigo com id ${idAmigo}`)
+        }
+
+        function carregaSugestoesAmigos(){
+            let container = document.getElementById("usuariosAdicionar")
+            let usuariosAmigos = usuariosAtuais();
+
+            for(let i=0; i<usuariosAmigos.length; i++){
+
+                console.log("opa")
+                //cria paragrafo que aparece nome do usuario
+                let nomeUsuario = document.createElement("p");
+                nomeUsuario.innerHTML = usuariosAmigos[i].nomeUsuario;
+
+                let botaoAdicionar = document.createElement("button");
+                botaoAdicionar.innerHTML = "Adicionar Amigo"
+                botaoAdicionar.setAttribute("onclick",`adicionarAmigo(${usuariosAmigos[i].id})`)
+
+                container.appendChild(nomeUsuario);
+                container.appendChild(botaoAdicionar);
+            }
+        }
+
+        function sair(){
+            window.location.href = "login.html"; 
+        }
+        
+        carregaSugestoesAmigos();
+    </script>
+</body>
+</html>

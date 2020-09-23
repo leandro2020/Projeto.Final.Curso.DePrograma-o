@@ -1,0 +1,81 @@
+/* LOGIN STYLE */
+body{
+    min-width:100%;
+}
+header{
+    background-color: #3b5998;
+    padding: 15px;
+}
+.container{
+    width: 1000px;
+    margin: auto;
+}
+#logo{
+    display: inline;
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: xx-large;
+    color: white;
+    /* background-color: aqua; */
+}
+.form {
+    display: inline-block;    
+    position: relative;
+    left: 500px;
+    /* background-color: red; */
+}
+.form-item{
+    display: inline-block;
+}
+.label{
+    color: white
+}
+#botaoEntrar{
+    background-color: #3C5898;
+    color: white;
+    border: 1px solid black;
+}
+main{
+    height: 600px;
+    background-image: linear-gradient( rgba(255,0,0,0), rgb(180, 190, 224));
+}
+.painelEsquerdo{
+    width: 33%;
+    display: inline-block;
+    padding-top: 25px;
+    padding-left: 100px;
+    /* background-color: brown; */
+}
+.painelDireito{
+    width: 47%;
+    padding-top: 25px;
+    float: left;
+    /* background-color: brown; */
+}
+#descricao{
+    font-weight: 400;
+    font-size: x-large;
+    margin-bottom: 50px;
+}
+.titulo{
+    font-weight: 700;
+    font-size: xx-large;
+}
+.grandeInput{
+    width: 100%;
+    height: 36px;
+    margin-top: 25px;
+    font-size: x-large;
+}
+
+#botaoCadastrar{
+    margin-top: 50px;
+    width: 250px;
+    height: 50px;
+    font-size: x-large;
+    font-weight: 600;
+    color: white;
+    background-color: darkgreen;
+    border-radius: 15px;
+}
+
