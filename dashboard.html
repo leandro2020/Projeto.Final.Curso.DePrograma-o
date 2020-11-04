@@ -8,6 +8,10 @@
 </head>
 <body>
     <h1>LOGADO!!</h1>
+    <span id="usuarioLogado">
+    
+    </span>
+    
     <button onclick="sair()">Sair</button>
     <div id="sugestaoAmigos">
         <h2>Sugestão de amigos</h2>
@@ -15,21 +19,60 @@
 
         </div>
     </div>
+    <div>
+
+        <textarea id="textoPostagem"placeholder="o que você está pensando?"></textarea>
+        <button onclick=postar()>Enviar</button>
+    </div>
+    <div id="postagens">
+
+    </div>
 
     <script src="falsoBackend.js"></script>
     <script>
-
+        var objetoUsuarioLogado = UsuarioLogado()
+        let meusAmigos = []
         function adicionarAmigo(idAmigo){
-            alert(`Adicionando amigo com id ${idAmigo}`)
+           // alert(`Adicionando amigo com id ${idAmigo}`)
+           console.log("idAmigo",idAmigo)
+            let todosUsuarios = usuariosAtuais()
+           
+            meusAmigos.push(idAmigo)
+            for(let i=0; i<todosUsuarios.length; i++){
+                if(todosUsuarios[i].id === idAmigo){
+                    todosUsuarios[i].amigos = CarregaListaAmigos(todosUsuarios[i].id)
+                    todosUsuarios[i].amigos.push( objetoUsuarioLogado.id)
+                }  
+                if(todosUsuarios[i].id === objetoUsuarioLogado.id){
+                    todosUsuarios[i].amigos = CarregaListaAmigos(todosUsuarios[i].id)
+                    todosUsuarios[i].amigos.push(idAmigo)
+                }
+            }
+            salvaUsuariosComAmigos(todosUsuarios)
+            
+            //console.log(meusAmigos)
+            //console.log(todosUsuarios)
         }
 
+        function carregaMeusAmigos(){
+            //console.log(objetoUsuarioLogado.amigos)
+            return objetoUsuarioLogado.amigos
+        }
+        function carregaUsuarioLogado(){
+            let containerNomeUsuarioLogado = document.getElementById("usuarioLogado");
+            let usarioLogado = document.createElement("p");
+           
+            usuarioLogado.innerHTML = "Bem vindo "+ objetoUsuarioLogado.nomeUsuario;
+            containerNomeUsuarioLogado.appendChild(usarioLogado)
+
+        }
         function carregaSugestoesAmigos(){
-            let container = document.getElementById("usuariosAdicionar")
+            let container = document.getElementById("usuariosAdicionar");
             let usuariosAmigos = usuariosAtuais();
 
             for(let i=0; i<usuariosAmigos.length; i++){
 
-                console.log("opa")
+                //console.log("opa")
                 //cria paragrafo que aparece nome do usuario
                 let nomeUsuario = document.createElement("p");
                 nomeUsuario.innerHTML = usuariosAmigos[i].nomeUsuario;
@@ -37,17 +80,59 @@
                 let botaoAdicionar = document.createElement("button");
                 botaoAdicionar.innerHTML = "Adicionar Amigo"
                 botaoAdicionar.setAttribute("onclick",`adicionarAmigo(${usuariosAmigos[i].id})`)
-
-                container.appendChild(nomeUsuario);
+                                    container.appendChild(nomeUsuario);
+                                    botaoAdicionar.class
                 container.appendChild(botaoAdicionar);
+            }
+        }
+        function postar(){
+            textoPostagem = document.getElementById("textoPostagem").value;
+            let postagemContainer = document.getElementById("postagens")
+            postagemContainer.innerHTML += `<p>${textoPostagem} </p>`
+            salvaPostagem(objetoUsuarioLogado.id,textoPostagem)
+
+        }
+
+        function carregaPostagens(){
+
+            let containerPostagens = document.getElementById("postagens");
+            let todasAsPostagens = postagensAtuais();
+            if(!todasAsPostagens){
+                todasAsPostagens = []
+            }
+            let meusAmigos = carregaMeusAmigos()
+            if(!meusAmigos){
+                meusAmigos = []
+            }
+            for(let i=0; i<todasAsPostagens.length; i++){
+               for(let j=0; j<meusAmigos.length;j++){
+                   if(todasAsPostagens[i].idCriador===objetoUsuarioLogado.amigos[j]){
+                       alert("pode mostrar" + todasAsPostagens[i].idCriador)
+                         //cria o paragrafo e insere a postagem dentro dele
+                        let postagem = document.createElement("p");
+                        postagem.innerHTML = todasAsPostagens[i].texto;
+                        containerPostagens.appendChild(postagem);
+
+                   }
+
+               }
+               if(todasAsPostagens[i].idCriador === objetoUsuarioLogado.id){
+                let postagem = document.createElement("p");
+                        postagem.innerHTML = todasAsPostagens[i].texto;
+                        containerPostagens.appendChild(postagem);
+               }
+              
             }
         }
 
         function sair(){
             window.location.href = "login.html"; 
         }
-        
+
         carregaSugestoesAmigos();
+        carregaUsuarioLogado();
+        carregaMeusAmigos();
+        carregaPostagens();
     </script>
 </body>
 </html>

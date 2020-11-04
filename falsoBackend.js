@@ -67,3 +67,36 @@ function excluirTodosUsuarios(){
     localStorage.clear();
 }
 
+function UsuarioLogado(){
+    return JSON.parse(localStorage.getItem('usuarioLogado'));
+}
+
+function CarregaListaAmigos(id){
+    let todosUsuarios = usuariosAtuais()
+    for(let i=0; i<todosUsuarios.length; i++){
+        if(todosUsuarios[i].id ===id){
+            if(todosUsuarios[i].amigos){
+                return todosUsuarios[i].amigos
+            }else{
+                return []
+            }
+        }
+    }
+}
+function salvaUsuariosComAmigos(todosUsuarios){
+    localStorage.setItem('usuarios', JSON.stringify(todosUsuarios));
+}
+function postagensAtuais(){
+    return JSON.parse(localStorage.getItem('postagens'));
+}
+
+function salvaPostagem(id,textoPostagem){
+    let postagens = postagensAtuais()
+    if(!postagens || !postagens?.length) postagens = [];
+    postagens.push({idCriador:id,texto:textoPostagem})
+
+    localStorage.setItem('postagens', JSON.stringify(postagens));
+}
+
+
+
